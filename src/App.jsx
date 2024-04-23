@@ -28,7 +28,12 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Topbar loggedIn={loggedIn} token={token} setToken={setToken} />
+        <Topbar
+          loggedIn={loggedIn}
+          token={token}
+          setToken={setToken}
+          setLoggedIn={setLoggedIn}
+        />
         <Container>
           {/* Jika ada pesan error, maka tampilkan */}
           {error && <p className="text-danger">{error}</p>}

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import axios from "axios";
 
-const Topbar = ({ loggedIn, token, setToken }) => {
+const Topbar = ({ loggedIn, token, setToken, setLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -14,6 +14,7 @@ const Topbar = ({ loggedIn, token, setToken }) => {
       });
       localStorage.removeItem("token");
       setToken("");
+      setLoggedIn(false);
       alert(response.data.message);
       navigate("/");
     } catch (error) {
