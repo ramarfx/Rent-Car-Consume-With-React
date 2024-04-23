@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 
-const Return = () => {
+const Return = ({ token }) => {
   return (
     <div>
       <h1>Return</h1>

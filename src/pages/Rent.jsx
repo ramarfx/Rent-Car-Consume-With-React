@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 
-const Rent = () => {
+const Rent = ({ token }) => {
   return (
     <div>
       <h1>Rent</h1>

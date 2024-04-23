@@ -2,20 +2,33 @@ import axios from "axios";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 
-const Login = () => {
+const Login = ({ loggedIn, setLoggedIn, setToken, setError }) => {
+  // Membuat state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // Jika sudah login, maka tampilkan
+  if (loggedIn) {
+    return (
+      <div>
+        <h1>You are already logged in</h1>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/a1/login", {
+      const response = await axios.post("http://127.0.0.1:8000/a1/auth/login", {
         username,
         password,
       });
-      console.log(response.data.token);
+      setLoggedIn(true); // ubah status login
+      setToken(response.data.token); // simpan token
+      setError(""); // kosongkan pesan error
+      localStorage.setItem("token", response.data.token); // simpan token di local storage
     } catch (error) {
-      console.log(error);
+      setError(error.response.data.message); // tampilkan pesan error
     }
   };
 

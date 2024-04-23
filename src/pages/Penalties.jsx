@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 
-const Penalties = () => {
+const Penalties = ({ token }) => {
   return (
     <div>
       <h1>Penalties</h1>
