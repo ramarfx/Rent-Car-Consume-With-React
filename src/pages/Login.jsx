@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 
-const Login = ({ loggedIn, setLoggedIn, setToken, setError }) => {
+const Login = ({ loggedIn, setLoggedIn, setToken, setError, setIsAdmin }) => {
   // Membuat state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,7 @@ const Login = ({ loggedIn, setLoggedIn, setToken, setError }) => {
         username,
         password,
       });
+    //   setIsAdmin(false);
       setLoggedIn(true); // ubah status login
       setToken(response.data.token); // simpan token
       setError(""); // kosongkan pesan error

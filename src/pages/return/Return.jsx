@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Penalties = ({ token }) => {
+const Return = ({ token }) => {
   //membuat penampung data rent
-  const [penalties, setPenalties] = useState([]);
+  const [carReturn, setCarReturn] = useState([]);
 
   //get data dari API
   useEffect(() => {
     const fetchData = async () => {
       try {
         // request api
-        const response = await axios.get("http://127.0.0.1:8000/a1/penalties", {
+        const response = await axios.get("http://127.0.0.1:8000/a1/return", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -20,7 +20,7 @@ const Penalties = ({ token }) => {
 
         //set data
         console.log(response.data);
-        setPenalties(response.data);
+        setCarReturn(response.data);
       } catch (error) {}
     };
 
@@ -29,50 +29,56 @@ const Penalties = ({ token }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/a1/penalties/${id}`, {
+      await axios.delete(`http://127.0.0.1:8000/a1/rent/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const newPenalties = penalties.filter((penalty) => penalty.id !== id);
-      setPenalties(newPenalties);
+      const newCarReturn = carReturn.filter((carReturn) => carReturn.id !== id);
+      setCarReturn(newCarReturn);
     } catch (error) {
-      console.log(error.response); // tampilkan pesan error di console
+      console.log(error.response.data); // tampilkan pesan error di console
     }
   };
-
   return (
     <div>
-      <h1>Penalties</h1>
+      <h1>Return</h1>
 
-    <Link to={'/penalties/add'}>Add Penalty</Link>
+      <Link to={"/return/add"}>add</Link>
+
       <Table>
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Keterangan</th>
+            <th>Tenant</th>
+            <th>No Car</th>
+            <th>Date Borrow</th>
+            <th>Date Return</th>
+            <th>Penalties Total</th>
             <th>Total</th>
             <th>action</th>
           </tr>
         </thead>
 
         <tbody>
-          {penalties.map((penalty) => (
-            <tr key={penalty.id}>
-                <td>{penalty.user.username}</td>
-                <td>{penalty.keterangan}</td>
-                <td>{penalty.total}</td>
-                <td>
+          {carReturn.map((carReturn) => (
+            <tr key={carReturn.id}>
+              <td>{carReturn.rent.tenant}</td>
+              <td>{carReturn.rent.no_car}</td>
+              <td>{carReturn.rent.date_borrow}</td>
+              <td>{carReturn.rent.date_return}</td>
+              <td>{carReturn.penalty.total}</td>
+              <td>{carReturn.total}</td>
+              <td>
                 <Button
                   variant="warning"
                   as={Link}
-                  to={`/penalties/edit/${penalty.id}`}
+                  to={`/return/edit/${carReturn.id}`}
                 >
                   Edit
                 </Button>
                 <Button
                   variant="danger"
-                  onClick={() => handleDelete(penalty.id)}
+                  onClick={() => handleDelete(carReturn.id)}
                 >
                   Delete
                 </Button>
@@ -85,4 +91,4 @@ const Penalties = ({ token }) => {
   );
 };
 
-export default Penalties;
+export default Return;
