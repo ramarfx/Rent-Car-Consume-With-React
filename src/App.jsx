@@ -1,16 +1,20 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Home from "./pages/Home";
-import Rent from "./pages/Rent";
+import Rent from "./pages/rent/Rent";
 import Return from "./pages/Return";
 import Register from "./pages/register/Register";
 import RegisterAdd from "./pages/register/RegisteAdd";
-import Penalties from "./pages/Penalties";
+import Penalties from "./pages/penalties/Penalties";
 import Login from "./pages/Login";
 import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RegisterEdit from "./pages/register/RegisterEdit";
+import RentAdd from "./pages/rent/RentAdd";
+import RentEdit from "./pages/rent/RentEdit";
+import PenaltiesAdd from "./pages/penalties/PenaltiesAdd";
+import PenaltiesEdit from "./pages/penalties/PenaltiesEdit";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false); // untuk simpan status login
@@ -57,8 +61,18 @@ const App = () => {
              */}
             <Route path="/" element={<ProtectedRoute loggedIn={loggedIn} />}>
               <Route path="/rent" element={<Rent token={token} />} />
+              <Route
+                path="/rent/add"
+                element={<RentAdd token={token} setError={setError} />}
+              />
+              <Route
+                path="/rent/edit/:id"
+                element={<RentEdit token={token} setError={setError} />}
+              />
+
               <Route path="/return" element={<Return token={token} />} />
               <Route path="/register" element={<Register token={token} />} />
+
               <Route
                 path="/register/add"
                 element={<RegisterAdd token={token} setError={setError} />}
@@ -68,6 +82,14 @@ const App = () => {
                 element={<RegisterEdit token={token} setError={setError} />}
               />
               <Route path="/penalties" element={<Penalties token={token} />} />
+              <Route
+                path="/penalties/add"
+                element={<PenaltiesAdd token={token} setError={setError} />}
+              />
+              <Route
+                path="/penalties/edit/:id"
+                element={<PenaltiesEdit token={token} setError={setError} />}
+              />
             </Route>
           </Routes>
         </Container>
